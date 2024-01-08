@@ -93,6 +93,7 @@ const (
 	OnMigration = "\amigration"
 
 	OnMedia           = "\amedia"
+	OnMessageReaction = "\amessage_reaction"
 	OnCallback        = "\acallback"
 	OnQuery           = "\aquery"
 	OnInlineResult    = "\ainline_result"

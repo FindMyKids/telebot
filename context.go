@@ -22,6 +22,9 @@ type Context interface {
 	// Message returns stored message if such presented.
 	Message() *Message
 
+	// MessageReaction returns reactions updates if such presented.
+	MessageReaction() *MessageReaction
+
 	// Callback returns stored callback if such presented.
 	Callback() *Callback
 
@@ -196,6 +199,15 @@ func (c *nativeContext) Message() *Message {
 	}
 }
 
+func (c *nativeContext) MessageReaction() *MessageReaction {
+	switch {
+	case c.u.MessageReaction != nil:
+		return c.u.MessageReaction
+	default:
+		return nil
+	}
+}
+
 func (c *nativeContext) Callback() *Callback {
 	return c.u.Callback
 }
@@ -281,6 +293,8 @@ func (c *nativeContext) Sender() *User {
 		return c.u.ChatMember.Sender
 	case c.u.ChatJoinRequest != nil:
 		return c.u.ChatJoinRequest.Sender
+	case c.u.MessageReaction != nil:
+		return c.u.MessageReaction.User
 	default:
 		return nil
 	}
@@ -296,6 +310,8 @@ func (c *nativeContext) Chat() *Chat {
 		return c.u.ChatMember.Chat
 	case c.u.ChatJoinRequest != nil:
 		return c.u.ChatJoinRequest.Chat
+	case c.u.MessageReaction != nil:
+		return c.u.MessageReaction.Chat
 	default:
 		return nil
 	}

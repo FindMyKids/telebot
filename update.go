@@ -20,6 +20,7 @@ type Update struct {
 	MyChatMember      *ChatMemberUpdate `json:"my_chat_member,omitempty"`
 	ChatMember        *ChatMemberUpdate `json:"chat_member,omitempty"`
 	ChatJoinRequest   *ChatJoinRequest  `json:"chat_join_request,omitempty"`
+	MessageReaction   *MessageReaction  `json:"message_reaction,omitempty"`
 }
 
 // ProcessUpdate processes a single incoming update.
@@ -306,6 +307,11 @@ func (b *Bot) ProcessUpdate(u Update) {
 
 	if u.ChatJoinRequest != nil {
 		b.handle(OnChatJoinRequest, c)
+		return
+	}
+
+	if u.MessageReaction != nil {
+		b.handle(OnMessageReaction, c)
 		return
 	}
 }
